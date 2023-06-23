@@ -30,13 +30,18 @@ Deployment finished
 ...
 ```
 
-Run the script with Bash Script as a Service:
+Run the script with curl bash in a pipeline:
 
 ```
-ECS_CLUSTER=clustername \
-ECS_SERVICE=servicename \
-bash <(https://raw.githubusercontent.com/uturndata/ecs-deployment-wait/main/ecs-deployment-wait.sh)
+# Ensure the pipeline will fail if this fails for any reason
+set -exo pipefail
 
+# Set configuration
+export ECS_CLUSTER=<cluster-name>
+export ECS_SERVICE=<service-name>
+export INTERVAL=<in-seconds> # Optional
+export TIMEOUT=<in-seconds> # Optional
+curl -sS https://raw.githubusercontent.com/uturndata/ecs-deployment-wait/main/ecs-deployment-wait.sh | bash
 ...
 ```
 
